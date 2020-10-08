@@ -1,3 +1,10 @@
 <%- include('partials/header') %>
-<h1>Na dashboard....</h1>
+<div class="form-group col-md-6" style="color: darkolivegreen;">
+    <h1>Na dashboard....</h1>
+    <h3>UID: <%= user.uid; %></h3>
+    <h3>EMAIL: <%= user.email; %></h3>
+</div>
+<div class="form-group col-md-6">
+    <a href="/">Voltar</a>
+</div>
 <%- include('partials/footer') %>

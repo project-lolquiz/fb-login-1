@@ -30,7 +30,7 @@ firebase.auth().onAuthStateChanged((user) => {
 });
 
 app.get("/", (req, resp) => {
-   resp.render('index');
+   resp.render('index', {errorMsg: '', code: 0});
 });
 
 app.post("/createuser", (req, resp) => {
@@ -38,9 +38,9 @@ app.post("/createuser", (req, resp) => {
     Auth.SignUpWithEmailAndPassword(body.email, body.password)
         .then((login) => {
             if (login.err) {
-                resp.redirect('dashboard');
+                resp.render('index', {errorMsg: login.err, code: 2});
             } else {
-                resp.redirect('/');
+                resp.redirect('dashboard');
             }
         });
 });
@@ -58,7 +58,8 @@ app.post("/login", (req, resp) => {
    Auth.SignInWithEmailAndPassword(body.email, body.password)
        .then((login) => {
           if (login.err) {
-              resp.redirect('/');
+              console.log("Error....", login.err)
+              resp.render('index', {errorMsg: login.err, code: 1});
           } else {
               //console.log(login);
               resp.redirect('dashboard');
