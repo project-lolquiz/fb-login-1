@@ -14,6 +14,14 @@ var firebaseConfig = {
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 
+module.exports.SendPasswordResetEmail = (email) => {
+    return firebase.auth().sendPasswordResetEmail(email)
+        .catch(function(error) {
+            console.log(`Reseting password: ${error}`);
+            return {err: error};
+        });
+};
+
 module.exports.SignInWithEmailAndPassword = (email, password) => {
     return firebase.auth().signInWithEmailAndPassword(email, password)
         .catch(function(error) {

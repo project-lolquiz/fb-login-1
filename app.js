@@ -67,4 +67,16 @@ app.post("/login", (req, resp) => {
        });
 });
 
+app.post("/changepassword", (req, resp) => {
+    const body = req.body;
+    Auth.SendPasswordResetEmail(body.email)
+        .then((data) => {
+            if (data) {
+                resp.render('index', {errorMsg: data.err, code: 3});
+            } else {
+                resp.render('index', {message: 'Email enviado com sucesso!', code: 4});
+            }
+        });
+});
+
 app.listen(3000);

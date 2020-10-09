@@ -36,4 +36,22 @@
         <button type="submit" class="btn btn-primary">Criar usuário</button>
     </div>
 </form>
+<hr></hr>
+<h3>Redefinir senha</h3>
+<form action="/changepassword" method="POST">
+    <div class="form-group col-md-6">
+        <label for="email">Email</label>
+        <input type="email" name="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+               placeholder="@email">
+    </div>
+    <div class="form-group col-md-6" style="color: red;">
+        <%= (code === 3) ? errorMsg : ''; %>
+    </div>
+    <div class="form-group col-md-6" style="color: darkblue;">
+        <%= (code === 4) ? message : ''; %>
+    </div>
+    <div class="form-group col-md-6">
+        <button type="submit" class="btn btn-primary">Alterar senha</button>
+    </div>
+</form>
 <%- include('partials/footer') %>
