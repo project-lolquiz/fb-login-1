@@ -14,6 +14,17 @@ var firebaseConfig = {
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 
+module.exports.UpdateProfile = (profile) => {
+    return firebase.auth().currentUser.updateProfile({
+            displayName: profile.name,
+        }).then(function(data) {
+          console.log(`Update profile ${data}`);
+        }).catch(function(error) {
+            console.log(`Updating profile: ${error}`);
+            return {err: error};
+        });
+};
+
 module.exports.SendPasswordResetEmail = (email) => {
     return firebase.auth().sendPasswordResetEmail(email)
         .catch(function(error) {

@@ -47,7 +47,8 @@ app.post("/createuser", (req, resp) => {
 
 app.get("/dashboard", (req, resp) => {
    if (userLogged) {
-      resp.render('dashboard', {user: userLogged});
+        console.log(JSON.stringify(userLogged));
+        resp.render('dashboard', {user: userLogged, code: 0});
    } else {
       resp.redirect('/');
    }
@@ -75,6 +76,18 @@ app.post("/changepassword", (req, resp) => {
                 resp.render('index', {errorMsg: data.err, code: 3});
             } else {
                 resp.render('index', {message: 'Email enviado com sucesso!', code: 4});
+            }
+        });
+});
+
+app.post("/updateprofile", (req, resp) => {
+    const body = req.body;
+    Auth.UpdateProfile({name: body.nome})
+        .then((data) => {
+            if (data) {
+                resp.render('dashboard', {errorMsg: data.err, code: 5});
+            } else {
+                resp.redirect('dashboard');
             }
         });
 });
