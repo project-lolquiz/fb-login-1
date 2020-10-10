@@ -6,9 +6,35 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
+    <script src="https://www.gstatic.com/firebasejs/live/3.0/firebase.js"></script>
+
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
           integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
     <link rel="stylesheet" href="/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="/style/style.css">
+
+    <script>
+        const config = {
+            apiKey: '<%= process.env.API_KEY %>',
+            authDomain: '<%= process.env.AUTH_DOMAIN %>',
+            databaseURL: '<%= process.env.DATABASE_URL %>',
+            storageBucket: '<%= process.env.STORAGE_BUCKET %>',
+        };
+
+        firebase.initializeApp(config);
+
+        const gmailProvider = new firebase.auth.GoogleAuthProvider();
+        gmailProvider.addScope('profile');
+        gmailProvider.addScope('email');
+
+        firebase.auth().onAuthStateChanged((user) => {
+            if (user) {
+                userLogged = user;
+                console.log(`UID ${userLogged.uid} | Display name ${userLogged.displayName}`);
+            } else {
+                userLogged = null;
+            }
+        });
+    </script>
 </head>
 <body>

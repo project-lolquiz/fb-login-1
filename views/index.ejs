@@ -13,8 +13,11 @@
     <div class="form-group col-md-6" style="color: red;">
         <%= (code === 1) ? errorMsg : ''; %>
     </div>
+    <div id="gmailContent" class="form-group col-md-6" style="color: darkorange;"></div>
     <div class="form-group col-md-6">
         <button type="submit" class="btn btn-primary">Autenticar</button>
+        <button type="button" class="btn btn-primary" onclick="javascript: loginWithGmail();">com Gmail</button>
+        <button type="button" class="btn btn-secondary" onclick="javascript: signOutGmail();">sair Gmail</button>
     </div>
 </form>
 <hr></hr>
@@ -22,12 +25,12 @@
 <form action="/createuser" method="POST">
     <div class="form-group col-md-6">
         <label for="email">Email</label>
-        <input type="email" name="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+        <input type="email" name="email" class="form-control" id="exampleInputEmail2" aria-describedby="emailHelp"
                placeholder="@email">
     </div>
     <div class="form-group col-md-6">
         <label for="exampleInputPassword1">Senha</label>
-        <input type="password" name="password" class="form-control" id="exampleInputPassword1" placeholder="senha">
+        <input type="password" name="password" class="form-control" id="exampleInputPassword2" placeholder="senha">
     </div>
     <div class="form-group col-md-6" style="color: red;">
         <%= (code === 2) ? errorMsg : ''; %>
@@ -41,7 +44,7 @@
 <form action="/changepassword" method="POST">
     <div class="form-group col-md-6">
         <label for="email">Email</label>
-        <input type="email" name="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+        <input type="email" name="email" class="form-control" id="exampleInputEmail3" aria-describedby="emailHelp"
                placeholder="@email">
     </div>
     <div class="form-group col-md-6" style="color: red;">
@@ -54,4 +57,29 @@
         <button type="submit" class="btn btn-primary">Alterar senha</button>
     </div>
 </form>
+<script>
+    function loginWithGmail() {
+        firebase.auth().signInWithPopup(gmailProvider)
+            .then(function(result) {
+                console.log(result);
+                const user = result.user;
+                document.getElementById('gmailContent').innerHTML = ''
+                    + '<strong>User name: ' + user.displayName + '</strong>'
+                    + '<br><strong>User email: ' + user.email + '</strong>'
+                    + '<br><strong>User uid: ' + user.uid + '</strong>';
+            }).catch(function(error) {
+                console.log(error);
+                const errorMessage = error.message;
+                return {err: errorMessage};
+        });
+    }
+
+    function signOutGmail() {
+        firebase.auth().signOut().then(function() {
+            console.log('Signout!');
+        }).catch(function(error) {
+            console.log(error);
+        });
+    }
+</script>
 <%- include('partials/footer') %>

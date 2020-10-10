@@ -8,6 +8,7 @@ const ejs = require('ejs');
 const app = express();
 
 let publicDir = require('path').join(__dirname,'/public');
+console.log('public dir ' + publicDir);
 app.use(express.static(publicDir));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use('/', express.static(__dirname + '/www')); // redirect root
