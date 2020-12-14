@@ -18,7 +18,7 @@ module.exports.UpdateProfile = (profile) => {
     return firebase.auth().currentUser.updateProfile({
             displayName: profile.name,
         }).then(function(data) {
-          console.log(`Update profile ${data}`);
+          console.log(`Updated profile ${data}`);
         }).catch(function(error) {
             console.log(`Updating profile: ${error}`);
             return {err: error};
@@ -28,7 +28,7 @@ module.exports.UpdateProfile = (profile) => {
 module.exports.SendPasswordResetEmail = (email) => {
     return firebase.auth().sendPasswordResetEmail(email)
         .catch(function(error) {
-            console.log(`Reseting password: ${error}`);
+            console.log(`Resetting password: ${error}`);
             return {err: error};
         });
 };
